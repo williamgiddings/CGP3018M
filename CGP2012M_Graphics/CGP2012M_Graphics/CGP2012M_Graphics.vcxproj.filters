@@ -1,30 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Main\Private">
+      <UniqueIdentifier>{24adebe7-a7db-42fe-b15d-71dc820c206d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="Main">
+      <UniqueIdentifier>{d5151989-8d66-4d5c-8e10-1a52239aaa4e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="MeshParser\Private">
+      <UniqueIdentifier>{1ea142e8-313b-42d9-b0c7-ab4b911acec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MeshParser">
+      <UniqueIdentifier>{c37f8598-b6e8-4beb-84a3-3c0f759b1ff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MeshParser\Public">
+      <UniqueIdentifier>{324f7fe4-61b3-4999-9a33-fbe405b46638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh\Primatives\Public">
+      <UniqueIdentifier>{bf31c3da-3b73-4798-b60f-cf77b9646476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh\Primatives">
+      <UniqueIdentifier>{6434c7b0-9d7b-445c-8e5e-eb4f5987e379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{d06d8342-4172-47ee-a2c0-aafad3c20948}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh\Public">
+      <UniqueIdentifier>{49c5a330-8a4d-4e15-b141-95b434b75b6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Public">
+      <UniqueIdentifier>{9a0c30bf-04fe-45c1-a9f4-25f89d8ac41a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{5adce3d5-cfe8-433e-9cc0-71903cb032a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Triangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="CGP3018M_Source_1.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Main\Private\CGP3018M_Source_1.cpp">
+      <Filter>Main\Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MeshParser\Private\OBJParser.cpp">
+      <Filter>MeshParser\Private</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\MeshParser\Public\OBJParser.h">
+      <Filter>MeshParser\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h">
+      <Filter>Mesh\Primatives\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh\Public\Mesh.h">
+      <Filter>Mesh\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader\Public\OldShaderClass.h">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader\Public\ShaderClass.h">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,16 +2,22 @@
 #include <cstdlib>
 #include <iostream>
 
+//include shape, shader header files
+#include <Mesh/Primatives/Public/Triangle.h>
+#include <Shader/Public/ShaderClass.h>
+
 // // GLEW - OpenGL Extension Wrangler - http://glew.sourceforge.net/
 // // NOTE: include before SDL.h
-#include <GL/glew.h>
+#ifndef GLEW_H
+#define GLEW_H
+//#include <GL/glew.h>
 #include "windows.h"
 
 // SDL - Simple DirectMedia Layer - https://www.libsdl.org/
 #include "SDL.h"
 //#include "SDL_image.h"
 //#include "SDL_mixer.h"
-// "SDL_ttf.h"
+//#include "SDL_ttf.h"
 
 // // - OpenGL Mathematics - https://glm.g-truc.net/
 #define GLM_FORCE_RADIANS // force glm to use radians
@@ -21,14 +27,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
-
 int main(int argc, char *argv[]) {
 	//SDL Initialise
 	SDL_Init(SDL_INIT_EVERYTHING);
 
 	//SDL create window
-	SDL_Window *win = SDL_CreateWindow("OpenGL Window", 100, 100, 800, 600, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+	SDL_Window *win = SDL_CreateWindow("CGP3018M OpenGL Window", 100, 100, 800, 600, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
 	//set context attributes
 	//sets opengl version to 4.3
@@ -48,9 +52,45 @@ int main(int argc, char *argv[]) {
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
 
+	//*****************************************************
+	//OpenGL specific data
+	//create objects
+	Triangle tri;
+
+	//create shaders
+	Shader vSh("..//..//Assets//Shaders//shader.vert");
+	Shader fSh("..//..//Assets//Shaders//shader.frag");
+
+	//create, allocate and compile shaders
+	//compile the shader code
+	//1 for vertex, 2 for fragment - there is probably a better way to do this
+	vSh.getShader(1);
+	fSh.getShader(2);
+
+	//create shader program, attach shaders together in the shader program
+	GLuint shaderProgram;
+	shaderProgram = glCreateProgram();
+
+	glAttachShader(shaderProgram, vSh.shaderID);
+	glAttachShader(shaderProgram, fSh.shaderID);
+	glLinkProgram(shaderProgram);
+
+	//delete shader source code pointers
+	glDeleteShader(vSh.shaderID);
+	glDeleteShader(fSh.shaderID);
+
+	//OpenGL buffers
+	//set buffers for the triangle
+	tri.setBuffers();
+
+	//***********************************************
+
+	SDL_Event event;
+	bool windowOpen = true;
+
 	//*****************************
 	//'game' loop
-	while (true)
+	while (windowOpen)
 	{
 
 		//****************************
@@ -58,15 +98,24 @@ int main(int argc, char *argv[]) {
 		
 		glClearColor(1.0f, 0.0f, 0.0f, 1);
 		glClear(GL_COLOR_BUFFER_BIT); 
+
+		//draw the triangles
+		//Use shader program we have compiled and linked
+		glUseProgram(shaderProgram);
+		glBindVertexArray(tri.VAO);
+		//set to wireframe so we can see the 2 triangles
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		//unbind (release) the VAO
+		glBindVertexArray(0);
+
 		SDL_GL_SwapWindow(win);
 
 
 		//*****************************
 		//SDL handled input
 		//Any input to the program is done here
-
-		SDL_Event event;
-		bool windowOpen = true;
 
 		while (windowOpen)
 		{
@@ -86,9 +135,5 @@ int main(int argc, char *argv[]) {
 
 	SDL_Quit();
 	return 0;
-
-
-
-
-
 }
+#endif
