@@ -19,10 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Input\Private\Input.cpp" />
+    <ClCompile Include="Source\Input\Private\InputInterface.cpp" />
     <ClCompile Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
     <ClCompile Include="Source\MeshParser\Private\OBJParser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Input\Public\InputInterface.h" />
+    <ClInclude Include="Source\Input\Public\Input.h" />
+    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
     <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
     <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
     <ClInclude Include="Source\Mesh\Public\Mesh.h" />
@@ -84,7 +89,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Users\Wgidz\Documents\Univeristy\Graphics\Engine\CGP2012M_Graphics\CGP2012M_Graphics\Source;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Users\Wgidz\Documents\Univeristy\Graphics\CGP3018M\CGP2012M_Graphics\CGP2012M_Graphics\Source\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
