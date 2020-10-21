@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <functional>
 #include <map>
-#include <vector>
+#include <list>
 #include <memory>
 
 class IInputInterface;
@@ -12,19 +12,23 @@ class InputBinding
 
 public:
 
-	explicit InputBinding( IInputInterface* Instance, std::function< void() > Func );
+	explicit InputBinding( IInputInterface* Instance, SDL_Keycode Key, std::function< void() > Func );
+	void Execute();
 	void Invalidate();
+	SDL_Keycode GetKey();
+	std::weak_ptr<IInputInterface> GetInputOwner();
+	bool IsValid() const;
 
 private:
 
 	std::function< void() > Callback;
 	std::weak_ptr< IInputInterface > InputOwner;
-	bool IsValid;
 	SDL_Keycode Key;
+	bool Valid;
 
 };
 
-using InputBindingSharedPtr = std::shared_ptr< InputBinding >;
+using InputBindingHandle = std::shared_ptr< InputBinding >;
 class InputHandler
 {
 
@@ -32,15 +36,17 @@ public:
 
 	InputHandler();
 
-	InputBindingSharedPtr BindInput( IInputInterface* Binder, SDL_Keycode KeyCode, std::function< void() > Callback );
-	void UnBindInput( InputBindingSharedPtr Binding );
+	InputBindingHandle BindInput( IInputInterface* Binder, SDL_Keycode KeyCode, std::function< void() > Callback );
+	void UnBindInput( InputBindingHandle Binding );
+	void PollInput();
 
 private:
 
-	std::vector< InputBindingSharedPtr >& FindOrCreateInputForKey( const SDL_Keycode KeyCode );
+	void CheckInput( const SDL_Keycode Key );
+	std::list< InputBindingHandle >& FindOrCreateInputForKey( const SDL_Keycode KeyCode );
 
 private:
 
-	std::map< SDL_Keycode, std::vector< InputBindingSharedPtr > > InputBindingMap;
+	std::map< SDL_Keycode, std::list< InputBindingHandle > > InputBindingMap;
 
 };

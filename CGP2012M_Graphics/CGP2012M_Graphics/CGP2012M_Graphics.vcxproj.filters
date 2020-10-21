@@ -59,19 +59,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Input\Private\InputInterface.cpp">
-      <Filter>Mesh\Primatives\Public</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Input\Public\Input.h">
       <Filter>Mesh\Primatives\Public</Filter>
     </ClInclude>
     <ClInclude Include="Source\Input\Public\InputInterface.h">
-      <Filter>Mesh\Primatives\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp">
-      <Filter>Mesh\Primatives\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp">
       <Filter>Mesh\Primatives\Public</Filter>
     </ClInclude>
     <ClInclude Include="Source\MeshParser\Public\OBJParser.h">
@@ -89,7 +80,34 @@
     <ClInclude Include="Source\Shader\Public\ShaderClass.h">
       <Filter>Mesh\Primatives\Public</Filter>
     </ClInclude>
-    <ClInclude Include="Source\**\*.*">
+    <ClInclude Include="Source\Input\Private\InputInterface.cpp">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input\Public\Input.h">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input\Public\InputInterface.h">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshParser\Public\OBJParser.h">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh\Public\Mesh.h">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader\Public\OldShaderClass.h">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader\Public\ShaderClass.h">
       <Filter>Shader\Public</Filter>
     </ClInclude>
     <ClInclude Include="Source\**\*.*">
