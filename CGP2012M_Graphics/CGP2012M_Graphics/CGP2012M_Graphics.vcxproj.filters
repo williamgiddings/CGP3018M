@@ -51,74 +51,42 @@
     <ClCompile Include="Source\Input\Private\InputInterface.cpp">
       <Filter>Input\Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Input\Private\Input.cpp">
+      <Filter>Input\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshParser\Private\OBJParser.cpp">
+      <Filter>MeshParser\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Input\Public\Input.h" />
-    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
-    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp" />
-    <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
-    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
-    <ClInclude Include="Source\Mesh\Public\Mesh.h" />
-    <ClInclude Include="Source\Shader\Public\OldShaderClass.h" />
-    <ClInclude Include="Source\Shader\Public\ShaderClass.h" />
-    <ClInclude Include="Source\Input\Public\Input.h" />
-    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
-    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp" />
-    <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
-    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
-    <ClInclude Include="Source\Mesh\Public\Mesh.h" />
-    <ClInclude Include="Source\Shader\Public\OldShaderClass.h" />
-    <ClInclude Include="Source\Shader\Public\ShaderClass.h" />
-    <ClInclude Include="Source\**\*.*" />
-    <ClInclude Include="Source\Input\Public\Input.h" />
-    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
-    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp" />
-    <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
-    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
-    <ClInclude Include="Source\Mesh\Public\Mesh.h" />
-    <ClInclude Include="Source\Shader\Public\OldShaderClass.h" />
-    <ClInclude Include="Source\Shader\Public\ShaderClass.h" />
-    <ClInclude Include="Source\Input\Public\Input.h" />
-    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
-    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp" />
-    <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
-    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
-    <ClInclude Include="Source\Mesh\Public\Mesh.h" />
-    <ClInclude Include="Source\Shader\Public\OldShaderClass.h" />
-    <ClInclude Include="Source\Shader\Public\ShaderClass.h" />
-    <ClInclude Include="Source\Input\Public\Input.h" />
-    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
-    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp" />
-    <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
-    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
-    <ClInclude Include="Source\Mesh\Public\Mesh.h" />
-    <ClInclude Include="Source\Shader\Public\OldShaderClass.h" />
-    <ClInclude Include="Source\Shader\Public\ShaderClass.h" />
-    <ClInclude Include="Source\Input\Public\Input.h" />
-    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
-    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp" />
-    <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
-    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
-    <ClInclude Include="Source\Mesh\Public\Mesh.h" />
-    <ClInclude Include="Source\Shader\Public\OldShaderClass.h" />
-    <ClInclude Include="Source\Shader\Public\ShaderClass.h" />
-    <ClInclude Include="Source\Input\Public\Input.h" />
-    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
-    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp" />
-    <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
-    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
-    <ClInclude Include="Source\Mesh\Public\Mesh.h" />
-    <ClInclude Include="Source\Shader\Public\OldShaderClass.h" />
-    <ClInclude Include="Source\Shader\Public\ShaderClass.h" />
-    <ClInclude Include="Source\Input\Public\Input.h" />
-    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
-    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp" />
-    <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
-    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
-    <ClInclude Include="Source\Mesh\Public\Mesh.h" />
-    <ClInclude Include="Source\Shader\Public\OldShaderClass.h" />
-    <ClInclude Include="Source\Shader\Public\ShaderClass.h" />
-    <ClInclude Include="Source\**\*.*">
+    <ClInclude Include="Source\Input\Private\InputInterface.cpp">
+      <Filter>Mesh\Primatives\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input\Public\Input.h">
+      <Filter>Mesh\Primatives\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input\Public\InputInterface.h">
+      <Filter>Mesh\Primatives\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp">
+      <Filter>Mesh\Primatives\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshParser\Private\OBJParser.cpp">
+      <Filter>Mesh\Primatives\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshParser\Public\OBJParser.h">
+      <Filter>Mesh\Primatives\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h">
+      <Filter>Mesh\Primatives\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh\Public\Mesh.h">
+      <Filter>Mesh\Primatives\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader\Public\OldShaderClass.h">
+      <Filter>Mesh\Primatives\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader\Public\ShaderClass.h">
       <Filter>Mesh\Primatives\Public</Filter>
     </ClInclude>
     <ClInclude Include="Source\**\*.*">
@@ -138,6 +106,25 @@
     </ClInclude>
     <ClInclude Include="Source\Input\Public\InputInterface.h">
       <Filter>Input\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
+    <ClInclude Include="Source\Input\Public\Input.h">
+      <Filter>Input\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh\Public\Mesh.h">
+      <Filter>Mesh\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshParser\Public\OBJParser.h">
+      <Filter>MeshParser\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader\Public\OldShaderClass.h">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader\Public\ShaderClass.h">
+      <Filter>Shader\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h">
+      <Filter>Mesh\Primatives\Public</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
