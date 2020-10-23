@@ -97,7 +97,7 @@ Mesh* OBJParser::LoadModel(const char* path)
 
 	
 	
-	return new Mesh(verticies, tindicies, RENDER_MODE_INDEXED);
+	return new Mesh( verticies, tindicies, Mesh::VertexLoadingModes::Indexed );
 }
 
 void OBJParser::parseIndicies(std::string s, std::vector<unsigned int> *location, unsigned int verts)

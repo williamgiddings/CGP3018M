@@ -49,9 +49,6 @@ int GameLoop( SDL_Window* const win, SDL_GLContext& glcontext )
 	Shader vSh( "..//..//Assets//Shaders//shader.vert" );
 	Shader fSh( "..//..//Assets//Shaders//shader.frag" );
 
-	//create, allocate and compile shaders
-	//compile the shader code
-	//1 for vertex, 2 for fragment - there is probably a better way to do this
 	vSh.getShader( 1 );
 	fSh.getShader( 2 );
 
