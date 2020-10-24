@@ -24,15 +24,18 @@
     <ClCompile Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
     <ClCompile Include="Source\MeshParser\Private\OBJParser.cpp" />
     <ClCompile Include="Source\Mesh\Private\Mesh.cpp" />
+    <ClCompile Include="Source\Shader\Private\Shader.cpp" />
+    <ClCompile Include="Source\Texture\Private\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Input\Public\Input.h" />
     <ClInclude Include="Source\Input\Public\InputInterface.h" />
+    <ClInclude Include="Source\Engine\EngineEnvironment.h" />
     <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
     <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
     <ClInclude Include="Source\Mesh\Public\Mesh.h" />
-    <ClInclude Include="Source\Shader\Public\OldShaderClass.h" />
-    <ClInclude Include="Source\Shader\Public\ShaderClass.h" />
+    <ClInclude Include="Source\Shader\Public\Shader.h" />
+    <ClInclude Include="Source\Texture\Public\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
@@ -111,12 +114,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)/../External Libraries/glew-2.1.0/include;$(SolutionDir)/../External Libraries/SDL2-2.0.9/include;$(SolutionDir)/../External Libraries/glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../External Libraries/glew-2.1.0/include;$(SolutionDir)/../External Libraries/SDL2_image-2.0.4/include;$(SolutionDir)/../External Libraries/SDL2-2.0.9/include;$(SolutionDir)/../External Libraries/glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\External Libraries\SDL2-2.0.9\lib\x86;$(SolutionDir)..\External Libraries\glew-2.1.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\External Libraries\SDL2_image-2.0.4\lib\x86;$(SolutionDir)..\External Libraries\SDL2-2.0.9\lib\x86;$(SolutionDir)..\External Libraries\glew-2.1.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

@@ -52,7 +52,7 @@ Mesh* OBJParser::LoadModel(const char* path)
 
 		if (line.substr(0, 2) == "v ")
 		{
-			temp = parseVerticies(line.substr(2, line.length() - 1));
+			temp = ParseVerticies(line.substr(2, line.length() - 1));
 			_verticies.push_back(Vertex(temp[0], temp[1], temp[2]));
 			temp.clear();
 			//parseVerticies(line.substr(2, line.length() - 1), &tverts);
@@ -60,28 +60,28 @@ Mesh* OBJParser::LoadModel(const char* path)
 		else if (line.substr(0, 3) == "vt ")
 		{
 			std::string oooga = line.substr(2, line.length() - 1);
-			temp = parseVerticies(line.substr(2, line.length() - 1));
+			temp = ParseVerticies(line.substr(2, line.length() - 1));
 			_uvcoords.push_back(UV(temp[1], temp[2]));
 			temp.clear();
 			//parseVerticies(line.substr(3, line.length() - 1), &tuv);
 		}
 		else if (line.substr(0, 3) == "vn ")
 		{
-			temp = parseVerticies(line.substr(2, line.length() - 1));
+			temp = ParseVerticies(line.substr(2, line.length() - 1));
 			_normals.push_back(Normal(temp[0], temp[1], temp[2]));
 			temp.clear();
 			//parseVerticies(line.substr(3, line.length() - 1), &tnorms);
 		}
 		else if (line.substr(0, 2) == "f ")
 		{
-			parseIndicies(line.substr(2, line.length() - 1), &tindicies, tverts.size() / 3);
+			ParseIndicies(line.substr(2, line.length() - 1), &tindicies, tverts.size() / 3);
 		}
 	}
 
 	myfile.close();
 	
 	
-	for (int i = 0; i < tindicies.size(); i+=3)
+	for ( GLuint i = 0; i < tindicies.size(); i+=3 )
 	{
 		verticies.push_back(_verticies[tindicies[i]].x);
 		verticies.push_back(_verticies[tindicies[i]].y);
@@ -100,7 +100,7 @@ Mesh* OBJParser::LoadModel(const char* path)
 	return new Mesh( verticies, tindicies, Mesh::VertexLoadingModes::Indexed );
 }
 
-void OBJParser::parseIndicies(std::string s, std::vector<unsigned int> *location, unsigned int verts)
+void OBJParser::ParseIndicies(std::string s, std::vector<unsigned int> *location, unsigned int verts)
 {
 	std::vector<unsigned int> tiv;
 	std::vector<unsigned int> tin;
@@ -111,7 +111,7 @@ void OBJParser::parseIndicies(std::string s, std::vector<unsigned int> *location
 	int valueIndex = 0;
 	int indexType = 0; //0 for verts, 1 for normals, 2 for UV coords
 
-	for (int i = 0; i < s.length(); i++)
+	for ( GLuint i = 0; i < s.length(); i++ )
 	{
 		switch (indexType)
 		{
@@ -162,7 +162,7 @@ void OBJParser::parseIndicies(std::string s, std::vector<unsigned int> *location
 
 	}
 
-	for (int i = 0; i < tiv.size(); i++)
+	for ( GLuint i = 0; i < tiv.size(); i++ )
 	{
 		location->push_back(tiv[i]);
 		location->push_back(tiuv[i]);
@@ -172,12 +172,12 @@ void OBJParser::parseIndicies(std::string s, std::vector<unsigned int> *location
 }
 
 
-void OBJParser::parseVerticies(std::string s, std::vector<float> *location)
+void OBJParser::ParseVerticies(std::string s, std::vector<float> *location)
 {
 	char curValue[9];
 	int valueIndex = 0;
 
-	for (int i = 0; i < s.length(); i++)
+	for ( GLuint i = 0; i < s.length(); i++ )
 	{
 		if (s[i] != ' ')
 		{
@@ -187,7 +187,7 @@ void OBJParser::parseVerticies(std::string s, std::vector<float> *location)
 		if (s[i] == ' ' || i == s.length() - 1)
 		{
 			curValue[8] = '\0';
-			location->push_back(atof(curValue));
+			location->push_back( ( float ) atof( curValue ) );
 			for (auto &v : curValue)
 			{
 				v = '\0';
@@ -198,23 +198,23 @@ void OBJParser::parseVerticies(std::string s, std::vector<float> *location)
 	}
 }
 
-std::vector<float> OBJParser::parseVerticies(std::string s)
+std::vector<float> OBJParser::ParseVerticies( std::string s )
 {
 	char curValue[9];
 	int valueIndex = 0;
 	std::vector<float> temp;
 	
-	for (int i = 0; i < s.length(); i++)
+	for ( GLuint i = 0; i < s.length(); i++ )
 	{
-		if (s[i] != ' ')
+		if ( s[i] != ' ' )
 		{
 			curValue[valueIndex] = s[i];
 			valueIndex++;
 		}
-		if (s[i] == ' ' || i == s.length() - 1)
+		if ( s[i] == ' ' || i == s.length() - 1 )
 		{
 			curValue[8] = '\0';
-			temp.push_back(atof(curValue));
+			temp.push_back( ( float )atof( curValue ) );
 			
 			valueIndex = 0;
 
@@ -222,5 +222,6 @@ std::vector<float> OBJParser::parseVerticies(std::string s)
 	}
 	return temp;
 }
+
 
 

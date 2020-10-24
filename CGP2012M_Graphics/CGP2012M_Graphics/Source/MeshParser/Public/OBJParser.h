@@ -3,13 +3,12 @@
 #include <Mesh/Public/Mesh.h>
 #include <vector>
 
-static class OBJParser
+class OBJParser
 {
 public:
 
-	Mesh* LoadModel(const char* path);
-	void parseIndicies(std::string s, std::vector<unsigned int> *location, unsigned int verts);
-	void parseVerticies(std::string string, std::vector<float> *location);
-	std::vector<float> parseVerticies(std::string string);
-	float formatString(std::string s);
+	static Mesh* LoadModel(const char* path);
+	static void ParseIndicies(std::string s, std::vector<unsigned int> *location, unsigned int verts);
+	static void ParseVerticies(std::string string, std::vector<float> *location);
+	static std::vector<float> ParseVerticies(std::string string);
 };

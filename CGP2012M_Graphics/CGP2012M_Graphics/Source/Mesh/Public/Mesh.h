@@ -1,27 +1,26 @@
 #pragma once
-#include <cstring>
-#include <vector>
 #include <GL/glew.h>
-#include "Shader/Public/ShaderClass.h"
-#include <glm/glm.hpp>
 
+#include <Shader/Public/Shader.h>
+#include <Texture/Public/Texture.h>
+#include <cstring>
+#include <glm/glm.hpp>
+#include <vector>
 
 class Mesh
 {
 public:
 
-	enum class VertexLoadingModes
+	enum VertexLoadingModes
 	{
 		Indexed,
-		Array,
-		Max
+		Array
 	};
 
-	enum class VertexDrawModes
+	enum VertexDrawModes
 	{
 		Tris,
-		Quads,
-		Max
+		Quads
 	};
 
 private:
@@ -31,7 +30,7 @@ private:
 	std::vector<float>		Normals;
 	std::vector<GLuint>		Indicies;
 	
-	//Texture				MeshTexture;
+	Texture					MeshTexture;
 	Shader					VertexShader;
 	Shader					FragmentShader;
 
@@ -45,16 +44,20 @@ private:
 	GLuint					VertexBufferObject;
 	GLuint					VertexArrayObject;
 	GLuint					IndexBufferObject;
-	bool					IsTextureLoaded;
 	bool					ClearDepth;
 
 public:
 
 	Mesh( std::vector<float> InVerticies, std::vector<unsigned int> InIndicies, VertexLoadingModes LoadingMode );
 
-	void SetTexture( const char* texturePath );
+	void SetTexture( const char * InTextureFilePath );
 	void SetRenderMode( const VertexLoadingModes LoadingMode );
 	void SetRenderType( const VertexDrawModes DrawMode );
 	void SetMeshBuffers();
 	void Render();
+
+private:
+
+	void ApplyRenderSettings();
+	void ApplyTextures();
 };

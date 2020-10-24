@@ -2,27 +2,38 @@
 
 Mesh::Mesh( std::vector<float> InVerticies, std::vector<unsigned int> InIndicies, VertexLoadingModes LoadingMode )
 	: Verticies( InVerticies )
+	, UVCoords()
+	, Normals()
 	, Indicies( InIndicies )
+	, MeshTexture()
+	, VertexShader()
+	, FragmentShader()
+	, RenderWireframe( false )
+	, FlipUVs( false )
 	, VertexLoadingMode( LoadingMode )
+	, VertexDrawMode( Mesh::VertexDrawModes::Tris )
+	, CompiledShader()
+	, VertexBufferObject()
+	, VertexArrayObject()
+	, IndexBufferObject()
+	, ClearDepth( true )
 {
-	VertexShader.shaderFileName( "..//Assets//Shaders//shader_projection.vert" );
-	FragmentShader.shaderFileName( "..//Assets//Shaders//shader_projection.frag" );
-
-	VertexShader.getShader( 1 );
-	FragmentShader.getShader( 2 );
+	VertexShader.SetShaderProgram( Shader::ShaderType::Vertex, "..//Assets//Shaders//shader_projection.vert" );
+	FragmentShader.SetShaderProgram( Shader::ShaderType::Fragment, "..//Assets//Shaders//shader_projection.frag" );
 
 	CompiledShader = glCreateProgram();
-	glAttachShader( CompiledShader, VertexShader.shaderID );
-	glAttachShader( CompiledShader, FragmentShader.shaderID );
+	glAttachShader( CompiledShader, VertexShader.GetCompiledShader() );
+	glAttachShader( CompiledShader, FragmentShader.GetCompiledShader() );
 	glLinkProgram( CompiledShader );
 
-	glDeleteShader( VertexShader.shaderID );
-	glDeleteShader( FragmentShader.shaderID );
+	glDeleteShader( VertexShader.GetCompiledShader() );
+	glDeleteShader( FragmentShader.GetCompiledShader() );
 }
 
-void Mesh::SetTexture( const char * texturePath )
+void Mesh::SetTexture( const char* InTextureFilePath )
 {
-	
+	MeshTexture.Load( InTextureFilePath );
+	MeshTexture.SetTextureBuffers();
 }
 
 void Mesh::SetRenderMode( VertexLoadingModes LoadingMode )
@@ -68,7 +79,7 @@ void Mesh::SetMeshBuffers()
 	glBindVertexArray( 0 );
 }
 
-void Mesh::Render()
+void Mesh::ApplyRenderSettings()
 {
 	glUseProgram( CompiledShader );
 	glEnable( GL_BLEND );
@@ -76,45 +87,43 @@ void Mesh::Render()
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	glEnable( GL_DEPTH_TEST );
 	glDepthFunc( GL_LEQUAL );
+	glBindVertexArray( VertexArrayObject );
+	glPointSize( 5.0f );
+
 	if ( !ClearDepth )
 	{
 		glDisable( GL_DEPTH_TEST );
-
 	}
 
-	glBindVertexArray( VertexArrayObject );
-	if ( IsTextureLoaded )
-	{
-		//glBindTexture(GL_TEXTURE_2D, tex.texture);
-	}
-
-	glPointSize( 5.0f );
 	if ( RenderWireframe )
 	{
 		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	}
-	if ( VertexDrawMode == VertexDrawModes::Quads )
-	{
-		if ( VertexLoadingMode == VertexLoadingModes::Indexed )
-		{
-			glDrawElements( GL_QUADS, Indicies.size(), GL_UNSIGNED_INT, 0 );
-		}
-		else
-		{
-			glDrawArrays( GL_QUADS, 0, Verticies.size() );
-		}
+}
 
-	}
-	else
+void Mesh::ApplyTextures()
+{
+	if ( MeshTexture.IsTextureReady() )
 	{
-		if ( VertexLoadingMode == VertexLoadingModes::Indexed )
-		{
-			glDrawElements( GL_TRIANGLES, Indicies.size(), GL_UNSIGNED_INT, 0 );
-		}
-		else
-		{
-			glDrawArrays( GL_TRIANGLES, 0, Verticies.size() );
-		}
+		glBindTexture( GL_TEXTURE_2D, MeshTexture.GetCompiledTexture() );
+	}
+}
+
+void Mesh::Render()
+{
+	ApplyRenderSettings();
+	ApplyTextures();
+
+	switch ( VertexLoadingMode )
+	{
+		case VertexLoadingModes::Indexed:
+			glDrawElements( VertexDrawMode, Indicies.size(), GL_UNSIGNED_INT, 0 );
+			break;
+		case VertexLoadingModes::Array:
+			glDrawArrays( VertexDrawMode, 0, Verticies.size() );
+			break;
+		default:
+			break;	
 	}
 
 	glBindTexture( GL_TEXTURE_2D, 0 );

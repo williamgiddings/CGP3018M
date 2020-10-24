@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include <Mesh/Primatives/Public/Triangle.h>
-#include <Shader/Public/ShaderClass.h>
+#include <Shader/Public/Shader.h>
 #include <Input/Public/Input.h>
 #include <Input/Public/InputInterface.h>
 
@@ -46,23 +46,23 @@ int GameLoop( SDL_Window* const win, SDL_GLContext& glcontext )
 	Triangle tri;
 
 	//create shaders
-	Shader vSh( "..//..//Assets//Shaders//shader.vert" );
-	Shader fSh( "..//..//Assets//Shaders//shader.frag" );
+	Shader vSh;
+	Shader fSh;
 
-	vSh.getShader( 1 );
-	fSh.getShader( 2 );
+	vSh.SetShaderProgram( Shader::ShaderType::Vertex, "shader" );
+	fSh.SetShaderProgram( Shader::ShaderType::Fragment, "shader" );
 
 	//create shader program, attach shaders together in the shader program
 	GLuint shaderProgram;
 	shaderProgram = glCreateProgram();
 
-	glAttachShader( shaderProgram, vSh.shaderID );
-	glAttachShader( shaderProgram, fSh.shaderID );
+	glAttachShader( shaderProgram, vSh.GetCompiledShader() );
+	glAttachShader( shaderProgram, fSh.GetCompiledShader() );
 	glLinkProgram( shaderProgram );
 
 	//delete shader source code pointers
-	glDeleteShader( vSh.shaderID );
-	glDeleteShader( fSh.shaderID );
+	glDeleteShader( vSh.GetCompiledShader() );
+	glDeleteShader( fSh.GetCompiledShader() );
 
 	glm::vec3 BgColour;
 
