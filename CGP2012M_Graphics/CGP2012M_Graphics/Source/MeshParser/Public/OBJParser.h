@@ -7,8 +7,11 @@ class OBJParser
 {
 public:
 
-	static Mesh* LoadModel(const char* path);
+	static Mesh LoadModel(const char* path);
 	static void ParseIndicies(std::string s, std::vector<unsigned int> *location, unsigned int verts);
 	static void ParseVerticies(std::string string, std::vector<float> *location);
 	static std::vector<float> ParseVerticies(std::string string);
+
+	static std::string GetStaticPath( const char* RelativePath );
+
 };

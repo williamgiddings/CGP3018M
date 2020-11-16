@@ -2,7 +2,8 @@
 #include <Engine/EngineEnvironment.h>
 
 Shader::Shader()
-	: ShaderProgram()
+	: RawShaderProgram()
+	, ShaderProgramData()
 	, CompiledShader()
 {
 }
@@ -15,7 +16,8 @@ const std::string Shader::GetShaderExtensionFromType( const ShaderType InShaderT
 void Shader::SetShaderProgram( const ShaderType InShaderType, std::string InShaderName )
 {
 	const std::string ShaderFilePath = InShaderName + GetShaderExtensionFromType( InShaderType );
-	GetShaderProgram( ShaderFilePath );
+	ShaderProgramData = GetShaderProgram( ShaderFilePath );
+	RawShaderProgram = ShaderProgramData.c_str();
 
 	switch ( InShaderType )
 	{
@@ -27,7 +29,7 @@ void Shader::SetShaderProgram( const ShaderType InShaderType, std::string InShad
 			break;
 	}
 
-	glShaderSource( CompiledShader, 1, &ShaderProgram, NULL );
+	glShaderSource( CompiledShader, 1, &RawShaderProgram, NULL );
 	glCompileShader( CompiledShader );
 
 	//debug shader compile
@@ -49,7 +51,7 @@ GLuint Shader::GetCompiledShader() const
 	return CompiledShader;
 }
 
-void Shader::GetShaderProgram( std::string ShaderName )
+std::string Shader::GetShaderProgram( std::string ShaderName )
 {
 	const auto ShaderFilePath = EngineEnvironment::ShaderDir + ShaderName;
 	std::ifstream inFile( ShaderFilePath.c_str() );
@@ -62,7 +64,7 @@ void Shader::GetShaderProgram( std::string ShaderName )
 		ShaderProgramData.append( line + "\n" );
 	}
 	const bool ValidShader = ShaderProgramData.length() > 0;
-	ShaderProgram = ShaderProgramData.c_str();
 
 	std::cout << ( ValidShader ? "import success:" : "import failed:") << std::endl;
+	return ShaderProgramData;
 }

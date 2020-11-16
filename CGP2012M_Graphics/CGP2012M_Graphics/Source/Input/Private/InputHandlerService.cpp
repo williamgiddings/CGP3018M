@@ -1,55 +1,21 @@
 
-#include <Input\Public\Input.h>
-#include <Input\Public\InputInterface.h>
+#include <Input/Public/InputBinding.h>
+#include <Input/Public/InputHandlerService.h>
+#include <Input/Public/InputInterface.h>
 
-InputBinding::InputBinding( IInputInterface* Instance, SDL_Keycode Key, std::function< void() > Func )
-	: InputOwner( std::make_shared<IInputInterface>( *Instance ) )
-	, Key( Key )
-	, Callback( Func )
-	, Valid( true )
-{
-}
-
-void InputBinding::Invalidate()
-{
-	Callback = nullptr;
-	Valid = false;
-	InputOwner.reset();
-}
-
-SDL_Keycode InputBinding::GetKey()
-{
-	return Key;
-}
-
-std::weak_ptr<IInputInterface> InputBinding::GetInputOwner()
-{
-	return InputOwner.lock();
-}
-
-void InputBinding::Execute()
-{
-	Callback();
-}
-
-bool InputBinding::IsValid() const
-{
-	return Valid;
-}
-
-InputHandler::InputHandler()
+InputHandlerService::InputHandlerService()
 	: InputBindingMap()
 {
 }
 
-InputBindingHandle InputHandler::BindInput( IInputInterface* Binder, SDL_Keycode KeyCode, std::function< void() > Callback )
+InputBindingHandle InputHandlerService::BindInput( InputInterface* Binder, SDL_Keycode KeyCode, std::function< void() > Callback )
 {
 	auto BoundInput = InputBindingHandle( new InputBinding( Binder, KeyCode, Callback ) );
 	FindOrCreateInputForKey( KeyCode ).push_back( BoundInput );
 	return BoundInput;
 }
 
-void InputHandler::UnBindInput( InputBindingHandle Binding )
+void InputHandlerService::UnBindInput( InputBindingHandle Binding )
 {
 	auto Bindings = InputBindingMap.find( Binding->GetKey() );
 
@@ -72,7 +38,7 @@ void InputHandler::UnBindInput( InputBindingHandle Binding )
 	}
 }
 
-void InputHandler::PollInput()
+void InputHandlerService::PollInput()
 {
 	SDL_Event event;
 	while ( SDL_PollEvent( &event ) )
@@ -89,7 +55,7 @@ void InputHandler::PollInput()
 	}
 }
 
-void InputHandler::CheckInput( const SDL_Keycode Key )
+void InputHandlerService::CheckInput( const SDL_Keycode Key )
 {
 	auto Bindings = InputBindingMap.find( Key );
 
@@ -108,7 +74,7 @@ void InputHandler::CheckInput( const SDL_Keycode Key )
 	}
 }
 
-std::list<InputBindingHandle>& InputHandler::FindOrCreateInputForKey( const SDL_Keycode KeyCode )
+std::list<InputBindingHandle>& InputHandlerService::FindOrCreateInputForKey( const SDL_Keycode KeyCode )
 {
 	auto Bindings = InputBindingMap.find( KeyCode );
 

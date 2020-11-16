@@ -1,9 +1,7 @@
 #pragma once
-#include <GL/glew.h>
 
-#include <Shader/Public/Shader.h>
+#include <GL/glew.h>
 #include <Texture/Public/Texture.h>
-#include <cstring>
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -17,11 +15,26 @@ public:
 		Array
 	};
 
-	enum VertexDrawModes
-	{
-		Tris,
-		Quads
-	};
+public:
+
+	Mesh( std::vector<float> InVerticies, std::vector<unsigned int> InIndicies, VertexLoadingModes LoadingMode );
+
+	void SetMeshBuffers();
+
+	void SetLoadingMode( const VertexLoadingModes LoadingMode );
+	void SetTexture( const char * InTextureFilePath );
+
+	const VertexLoadingModes GetVertexReadMode() const;
+	const std::vector<float>& GetVerticies() const;
+	const std::vector<float>& GetUVCoords() const;
+	const std::vector<float>& GetNormals() const;
+	const std::vector<GLuint>& GetIndicies() const;
+	
+	const Texture& GetMeshTexture() const;
+
+	GLuint GetVertexBuffer() const;
+	GLuint GetIndexBuffer() const;
+	GLuint GetVertexArrayObject() const;
 
 private:
 
@@ -29,35 +42,12 @@ private:
 	std::vector<float>		UVCoords;
 	std::vector<float>		Normals;
 	std::vector<GLuint>		Indicies;
-	
-	Texture					MeshTexture;
-	Shader					VertexShader;
-	Shader					FragmentShader;
 
-	bool					RenderWireframe;
-	bool					FlipUVs;
-	
-	VertexLoadingModes		VertexLoadingMode;
-	VertexDrawModes			VertexDrawMode;
-
-	GLuint					CompiledShader;
 	GLuint					VertexBufferObject;
-	GLuint					VertexArrayObject;
 	GLuint					IndexBufferObject;
-	bool					ClearDepth;
+	GLuint					VertexArrayObject;
 
-public:
+	Texture					MeshTexture;
+	VertexLoadingModes		VertexLoadingMode;
 
-	Mesh( std::vector<float> InVerticies, std::vector<unsigned int> InIndicies, VertexLoadingModes LoadingMode );
-
-	void SetTexture( const char * InTextureFilePath );
-	void SetRenderMode( const VertexLoadingModes LoadingMode );
-	void SetRenderType( const VertexDrawModes DrawMode );
-	void SetMeshBuffers();
-	void Render();
-
-private:
-
-	void ApplyRenderSettings();
-	void ApplyTextures();
 };

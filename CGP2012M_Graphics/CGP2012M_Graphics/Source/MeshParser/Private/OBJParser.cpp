@@ -1,4 +1,4 @@
-
+#include <Engine/EngineEnvironment.h>
 #include <MeshParser/Public/OBJParser.h>
 #include <fstream>
 #include <iostream>
@@ -21,23 +21,14 @@ struct Normal
 	Normal(float X, float Y, float Z) : x(X), y(Y), z(Z) {};
 };
 
-Mesh* OBJParser::LoadModel(const char* path)
+Mesh OBJParser::LoadModel( const char* path )
 {
 	std::vector<float> tverts;
 	std::vector<float> tnorms;
 	std::vector<float> tuv;
-	std::vector<unsigned int> tindicies;
-
-	std::vector<unsigned int> indicies;
 
 	std::vector<float> verticies;
-
-	std::ifstream myfile = std::ifstream(path);
-	std::string line;
-
-	std::vector<float> TVERTEX;
-	std::vector<float> TUV;
-	std::vector<float> TNORM;
+	std::vector<unsigned int> tindicies;
 
 	std::vector<Vertex> _verticies;
 	std::vector<UV> _uvcoords;
@@ -45,10 +36,11 @@ Mesh* OBJParser::LoadModel(const char* path)
 
 	std::vector<float> temp;
 
-	while (!myfile.eof())
+	std::ifstream myfile = std::ifstream(path);
+	while (myfile.good())
 	{
+		std::string line;
 		std::getline(myfile, line);
-		
 
 		if (line.substr(0, 2) == "v ")
 		{
@@ -94,10 +86,7 @@ Mesh* OBJParser::LoadModel(const char* path)
 		verticies.push_back(_normals[tindicies[i+2]].y);
 		verticies.push_back(_normals[tindicies[i+2]].z);
 	}
-
-	
-	
-	return new Mesh( verticies, tindicies, Mesh::VertexLoadingModes::Indexed );
+	return Mesh( verticies, tindicies, Mesh::VertexLoadingModes::Indexed );
 }
 
 void OBJParser::ParseIndicies(std::string s, std::vector<unsigned int> *location, unsigned int verts)
@@ -221,6 +210,12 @@ std::vector<float> OBJParser::ParseVerticies( std::string s )
 		}
 	}
 	return temp;
+}
+
+std::string OBJParser::GetStaticPath( const char * RelativePath )
+{
+	const auto Path = EngineEnvironment::ModelDir + std::string( RelativePath );
+	return Path;
 }
 
 

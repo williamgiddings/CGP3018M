@@ -27,11 +27,12 @@ public:
 
 private:
 
-	void GetShaderProgram( std::string ShaderName );
+	std::string GetShaderProgram( std::string ShaderName );
 
 private:
 	
-	const GLchar*	ShaderProgram;
+	const char*		RawShaderProgram;
+	std::string		ShaderProgramData;
 	GLuint			CompiledShader;
 };
 

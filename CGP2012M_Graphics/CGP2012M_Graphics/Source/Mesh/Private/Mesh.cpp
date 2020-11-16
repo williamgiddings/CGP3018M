@@ -1,49 +1,16 @@
-#include <Mesh\Public\Mesh.h>
+#include <Mesh/Public/Mesh.h>
 
 Mesh::Mesh( std::vector<float> InVerticies, std::vector<unsigned int> InIndicies, VertexLoadingModes LoadingMode )
 	: Verticies( InVerticies )
 	, UVCoords()
 	, Normals()
 	, Indicies( InIndicies )
-	, MeshTexture()
-	, VertexShader()
-	, FragmentShader()
-	, RenderWireframe( false )
-	, FlipUVs( false )
-	, VertexLoadingMode( LoadingMode )
-	, VertexDrawMode( Mesh::VertexDrawModes::Tris )
-	, CompiledShader()
 	, VertexBufferObject()
-	, VertexArrayObject()
 	, IndexBufferObject()
-	, ClearDepth( true )
+	, VertexArrayObject()
+	, MeshTexture()
+	, VertexLoadingMode( LoadingMode )
 {
-	VertexShader.SetShaderProgram( Shader::ShaderType::Vertex, "..//Assets//Shaders//shader_projection.vert" );
-	FragmentShader.SetShaderProgram( Shader::ShaderType::Fragment, "..//Assets//Shaders//shader_projection.frag" );
-
-	CompiledShader = glCreateProgram();
-	glAttachShader( CompiledShader, VertexShader.GetCompiledShader() );
-	glAttachShader( CompiledShader, FragmentShader.GetCompiledShader() );
-	glLinkProgram( CompiledShader );
-
-	glDeleteShader( VertexShader.GetCompiledShader() );
-	glDeleteShader( FragmentShader.GetCompiledShader() );
-}
-
-void Mesh::SetTexture( const char* InTextureFilePath )
-{
-	MeshTexture.Load( InTextureFilePath );
-	MeshTexture.SetTextureBuffers();
-}
-
-void Mesh::SetRenderMode( VertexLoadingModes LoadingMode )
-{
-	VertexLoadingMode = LoadingMode;
-}
-
-void Mesh::SetRenderType( const VertexDrawModes DrawMode )
-{
-	VertexDrawMode = DrawMode;
 }
 
 void Mesh::SetMeshBuffers()
@@ -69,7 +36,7 @@ void Mesh::SetMeshBuffers()
 	glEnableVertexAttribArray( 2 );
 
 	//Create index buffer
-	if ( VertexLoadingMode == VertexLoadingModes::Indexed )
+	if ( GetVertexReadMode() == Mesh::VertexLoadingModes::Indexed )
 	{
 		glGenBuffers( 1, &IndexBufferObject );
 		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, IndexBufferObject );
@@ -79,53 +46,59 @@ void Mesh::SetMeshBuffers()
 	glBindVertexArray( 0 );
 }
 
-void Mesh::ApplyRenderSettings()
+void Mesh::SetLoadingMode( VertexLoadingModes LoadingMode )
 {
-	glUseProgram( CompiledShader );
-	glEnable( GL_BLEND );
-	glCullFace( GL_BACK );
-	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-	glEnable( GL_DEPTH_TEST );
-	glDepthFunc( GL_LEQUAL );
-	glBindVertexArray( VertexArrayObject );
-	glPointSize( 5.0f );
-
-	if ( !ClearDepth )
-	{
-		glDisable( GL_DEPTH_TEST );
-	}
-
-	if ( RenderWireframe )
-	{
-		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-	}
+	VertexLoadingMode = LoadingMode;
 }
 
-void Mesh::ApplyTextures()
+void Mesh::SetTexture( const char* InTextureFilePath )
 {
-	if ( MeshTexture.IsTextureReady() )
-	{
-		glBindTexture( GL_TEXTURE_2D, MeshTexture.GetCompiledTexture() );
-	}
+	MeshTexture.Load( InTextureFilePath );
+	MeshTexture.SetTextureBuffers();
 }
 
-void Mesh::Render()
+const Mesh::VertexLoadingModes Mesh::GetVertexReadMode() const
 {
-	ApplyRenderSettings();
-	ApplyTextures();
-
-	switch ( VertexLoadingMode )
-	{
-		case VertexLoadingModes::Indexed:
-			glDrawElements( VertexDrawMode, Indicies.size(), GL_UNSIGNED_INT, 0 );
-			break;
-		case VertexLoadingModes::Array:
-			glDrawArrays( VertexDrawMode, 0, Verticies.size() );
-			break;
-		default:
-			break;	
-	}
-
-	glBindTexture( GL_TEXTURE_2D, 0 );
-	glBindVertexArray( 0 );
+	return VertexLoadingMode;
 }
+
+const std::vector<float>& Mesh::GetVerticies() const
+{
+	return Verticies;
+}
+
+const std::vector<float>& Mesh::GetUVCoords() const
+{
+	return UVCoords;
+}
+
+const std::vector<float>& Mesh::GetNormals() const
+{
+	return Normals;
+}
+
+const std::vector<GLuint>& Mesh::GetIndicies() const
+{
+	return Indicies;
+}
+
+const Texture& Mesh::GetMeshTexture() const
+{
+	return MeshTexture;
+}
+
+GLuint Mesh::GetVertexBuffer() const
+{
+	return VertexBufferObject;
+}
+
+GLuint Mesh::GetIndexBuffer() const
+{
+	return IndexBufferObject;
+}
+
+GLuint Mesh::GetVertexArrayObject() const
+{
+	return VertexArrayObject;
+}
+

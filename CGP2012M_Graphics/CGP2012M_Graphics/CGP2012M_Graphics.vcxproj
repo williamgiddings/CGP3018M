@@ -19,23 +19,46 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Input\Private\Input.cpp" />
+    <ClCompile Include="Source\Application\Private\ApplicationState.cpp" />
+    <ClCompile Include="Source\Application\Private\ApplicationWindow.cpp" />
+    <ClCompile Include="Source\Application\Private\Main.cpp" />
+    <ClCompile Include="Source\Camera\Private\Camera.cpp" />
+    <ClCompile Include="Source\Engine\ObjectFactory\Private\ObjectManagerService.cpp" />
+    <ClCompile Include="Source\Engine\ObjectFactory\Private\ObjectHelpers.cpp" />
+    <ClCompile Include="Source\Input\Private\InputBinding.cpp" />
+    <ClCompile Include="Source\Input\Private\InputHandlerService.cpp" />
     <ClCompile Include="Source\Input\Private\InputInterface.cpp" />
-    <ClCompile Include="Source\Main\Private\CGP3018M_Source_1.cpp" />
     <ClCompile Include="Source\MeshParser\Private\OBJParser.cpp" />
     <ClCompile Include="Source\Mesh\Private\Mesh.cpp" />
+    <ClCompile Include="Source\Mesh\Private\MeshManagerService.cpp" />
+    <ClCompile Include="Source\Mesh\Private\MeshInstance.cpp" />
+    <ClCompile Include="Source\SceneObject\Private\SceneObject.cpp" />
+    <ClCompile Include="Source\SceneObject\Private\ScenePhysObject.cpp" />
     <ClCompile Include="Source\Shader\Private\Shader.cpp" />
     <ClCompile Include="Source\Texture\Private\Texture.cpp" />
+    <ClCompile Include="Source\Transform\Private\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Input\Public\Input.h" />
+    <ClInclude Include="Source\Application\Public\ApplicationState.h" />
+    <ClInclude Include="Source\Camera\Public\Camera.h" />
+    <ClInclude Include="Source\Engine\ObjectFactory\Public\ObjectManagerService.h" />
+    <ClInclude Include="Source\Engine\ObjectFactory\Public\ObjectHelpers.h" />
+    <ClInclude Include="Source\Engine\Utils\Public\MathUtil.h" />
+    <ClInclude Include="Source\Input\Public\InputHandlerService.h" />
+    <ClInclude Include="Source\Input\Public\InputBinding.h" />
     <ClInclude Include="Source\Input\Public\InputInterface.h" />
     <ClInclude Include="Source\Engine\EngineEnvironment.h" />
+    <ClInclude Include="Source\Application\Public\ApplicationWindow.h" />
     <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
     <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
     <ClInclude Include="Source\Mesh\Public\Mesh.h" />
+    <ClInclude Include="Source\Mesh\Public\MeshManagerService.h" />
+    <ClInclude Include="Source\Mesh\Public\MeshInstance.h" />
+    <ClInclude Include="Source\SceneObject\Public\SceneObject.h" />
+    <ClInclude Include="Source\SceneObject\Public\ScenePhysObject.h" />
     <ClInclude Include="Source\Shader\Public\Shader.h" />
     <ClInclude Include="Source\Texture\Public\Texture.h" />
+    <ClInclude Include="Source\Transform\Public\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
