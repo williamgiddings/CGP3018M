@@ -12,8 +12,8 @@ Camera::Camera( ApplicationState* AppStateStrongPtr )
 void Camera::UpdateCamera()
 {
 	CameraViewMatrix = glm::lookAt( 
-		GetTransform().GetPosition(),
-		glm::normalize( GetTransform().GetPosition() - CameraTarget ),
-		GetTransform().Up 
+		GetPosition(),
+		glm::normalize( GetPosition() - CameraTarget ),
+		Up 
 	);
 }

@@ -1,10 +1,11 @@
 #include <Transform/Public/Transform.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
 
 Transform::Transform()
-	: TranslationMatrix( 0.0f )
-	, RotationMatrix( 0.0f )
-	, ScaleMatrix( 0.0f )
+	: TranslationMatrix( 1.0f )
+	, RotationMatrix( 1.0f )
+	, ScaleMatrix( 1.0f )
 	, Up( 0.0f, 1.0f, 0.0f )
 	, Right( 1.0f, 0.0f, 0.0f )
 {
@@ -55,13 +56,24 @@ glm::vec3 Transform::GetRotation() const
 
 glm::mat4 Transform::GetMatrix() const
 {
-	return TranslationMatrix * RotationMatrix * RotationMatrix;
+	return TranslationMatrix * RotationMatrix * ScaleMatrix;
 }
 
-void Transform::SetPosition( const float X, const float Y, const float Z )
+void Transform::SetScale( const float InScale )
 {
-	TranslationMatrix = glm::translate( TranslationMatrix, glm::vec3( X, Y, Z ) );
+	ScaleMatrix = glm::scale( ScaleMatrix, glm::vec3( InScale ) );
 }
+
+void Transform::SetScale( const glm::vec3 InScale )
+{
+	ScaleMatrix = glm::scale( ScaleMatrix, InScale );
+}
+
+void Transform::SetRotation( const glm::vec3 InRotation )
+{
+	RotationMatrix = glm::eulerAngleYXZ( InRotation.x, InRotation.y, InRotation.z );
+}
+
 void Transform::SetPosition( const glm::vec3 InPosition )
 {
 	TranslationMatrix = glm::translate( TranslationMatrix, InPosition );

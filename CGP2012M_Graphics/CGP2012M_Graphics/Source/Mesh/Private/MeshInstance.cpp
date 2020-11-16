@@ -1,20 +1,23 @@
+#include <glm/gtc/type_ptr.hpp>
+
 #include <Mesh/Public/MeshInstance.h>
+#include <SceneObject/Public/ScenePhysObject.h>
 
 MeshInstance::MeshInstance()
-	: MeshInstance( nullptr )
+	: MeshInstance( nullptr, nullptr )
 {
 }
 
-MeshInstance::MeshInstance( std::shared_ptr<Mesh> PooledMeshReference )
+MeshInstance::MeshInstance( ScenePhysObject* InInstanceOwner, std::shared_ptr<Mesh> PooledMeshReference )
 	: ObjectMesh( PooledMeshReference )
 	, VertexShader()
 	, FragmentShader()
-	, RenderWireframe( false )
+	, RenderWireframe( true )
 	, FlipUVs( false )
-	, ClearDepth( true )
-	, MeshBuffersSet( false )
+	, ClearDepth( false )
 	, VertexDrawMode( MeshInstance::VertexDrawModes::Tris )
 	, CompiledShader()
+	, InstanceOwner( InInstanceOwner )
 {
 	VertexShader.SetShaderProgram( Shader::ShaderType::Vertex, "shader" );
 	FragmentShader.SetShaderProgram( Shader::ShaderType::Fragment, "shader" );
@@ -33,62 +36,64 @@ void MeshInstance::SetRenderType( const VertexDrawModes DrawMode )
 	VertexDrawMode = DrawMode;
 }
 
+void MeshInstance::ApplyShaderUniforms()
+{
+	GLuint TransformLocation = glGetUniformLocation( CompiledShader, "transform" );
+	glm::mat4 Mat = InstanceOwner->GetMatrix();
+	glUniformMatrix4fv( TransformLocation, 1, GL_FALSE, glm::value_ptr( Mat ) );
+}
+
 void MeshInstance::ApplyRenderSettings()
 {
-	if ( ObjectMesh )
+	glEnable( GL_BLEND );
+	glCullFace( GL_BACK );
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	glEnable( GL_DEPTH_TEST );
+	glDepthFunc( GL_LEQUAL );
+	glBindVertexArray( ObjectMesh->GetVertexArrayObject() );
+	glPointSize( 5.0f );
+
+	if ( !ClearDepth )
 	{
-		glUseProgram( CompiledShader );
-		glEnable( GL_BLEND );
-		glCullFace( GL_BACK );
-		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-		glEnable( GL_DEPTH_TEST );
-		glDepthFunc( GL_LEQUAL );
-		glBindVertexArray( ObjectMesh->GetVertexArrayObject() );
-		glPointSize( 5.0f );
+		glDisable( GL_DEPTH_TEST );
+	}
 
-		if ( !ClearDepth )
-		{
-			glDisable( GL_DEPTH_TEST );
-		}
-
-		if ( RenderWireframe )
-		{
-			glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-		}
+	if ( RenderWireframe )
+	{
+		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	}
 }
 
 void MeshInstance::ApplyTextures()
 {
-	if ( ObjectMesh )
-	{
-		const Texture& const MeshTexture = ObjectMesh->GetMeshTexture();
+	const Texture& const MeshTexture = ObjectMesh->GetMeshTexture();
 
-		if ( MeshTexture.IsTextureReady() )
-		{
-			glBindTexture( GL_TEXTURE_2D, MeshTexture.GetCompiledTexture() );
-		}
-	}	
+	if ( MeshTexture.IsTextureReady() )
+	{
+		glBindTexture( GL_TEXTURE_2D, MeshTexture.GetCompiledTexture() );
+	}
 }
 
 void MeshInstance::Render()
 {
-	if ( ObjectMesh )
+	if ( ObjectMesh && InstanceOwner )
 	{
 		const auto& Verticies = ObjectMesh->GetVerticies();
 		const auto& Indicies = ObjectMesh->GetIndicies();
 		
-		ObjectMesh->SetMeshBuffers();
+		glUseProgram( CompiledShader );
+		ApplyShaderUniforms();
 		ApplyRenderSettings();
 		ApplyTextures();
 
 		switch ( ObjectMesh->GetVertexReadMode() )
 		{
 			case Mesh::VertexLoadingModes::Indexed:
-				glDrawElements( VertexDrawMode, Indicies.size(), GL_UNSIGNED_INT, 0 );
+				glDrawArrays( GL_TRIANGLES, 0, Verticies.size() );
+				//glDrawElements( GL_TRIANGLES, Indicies.size(), GL_UNSIGNED_INT, 0 );
 				break;
 			case Mesh::VertexLoadingModes::Array:
-				glDrawArrays( VertexDrawMode, 0, Verticies.size() );
+				glDrawArrays( GL_TRIANGLES, 0, Verticies.size() );
 				break;
 			default:
 				break;

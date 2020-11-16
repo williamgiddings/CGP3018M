@@ -5,6 +5,9 @@
 #include <Mesh/Public/Mesh.h>
 #include <MeshParser/Public/OBJParser.h>
 
+
+#include <Shader/Public/Shader.h>
+
 ApplicationWindow::ApplicationWindow()
 	: AppState()
 	, ApplicationInputInterface()
@@ -29,6 +32,8 @@ ApplicationWindow::ApplicationWindow()
 	//GLEW initialise
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
+
+	SetBackGroundColour( 0.0f, 1.0f, 0.0f );
 }
 
 void ApplicationWindow::SetBackGroundColour( const float R, const float G, const float B )
@@ -110,16 +115,16 @@ void ApplicationWindow::Tick()
 	InputHandlerService& ApplicationInputHandler = AppState.GetInputHandlerService();
 
 	ApplicationInputHandler.PollInput();
-	glClearColor( BgColour.r, BgColour.g, BgColour.b, 1 );
-	glClear( GL_COLOR_BUFFER_BIT );
-	SDL_GL_SwapWindow( SDLWindow );
 }
 
 void ApplicationWindow::Render()
 {
-	ObjectManagerService& ObjectManager = AppState.GetObjectManagerService();
-
-	ObjectManager.RenderSceneObjects();
+	glClearColor( BgColour.r, BgColour.g, BgColour.b, 1 );
+	glClear( GL_COLOR_BUFFER_BIT );
+	
+	AppState.GetObjectManagerService().RenderSceneObjects();
+	
+	SDL_GL_SwapWindow( SDLWindow );
 }
 
 void ApplicationWindow::CloseWindow()

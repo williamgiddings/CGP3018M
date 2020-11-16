@@ -51,7 +51,6 @@ Mesh OBJParser::LoadModel( const char* path )
 		}
 		else if (line.substr(0, 3) == "vt ")
 		{
-			std::string oooga = line.substr(2, line.length() - 1);
 			temp = ParseVerticies(line.substr(2, line.length() - 1));
 			_uvcoords.push_back(UV(temp[1], temp[2]));
 			temp.clear();

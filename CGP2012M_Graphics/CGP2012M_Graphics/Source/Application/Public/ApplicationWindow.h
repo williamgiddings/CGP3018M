@@ -8,6 +8,9 @@
 #include <Input/Public/InputInterface.h>
 #include <Application/Public/ApplicationState.h>
 
+//remove
+#include <Mesh/Primatives/Public/Triangle.h>
+
 class ApplicationWindow
 {
 public:
@@ -39,4 +42,9 @@ private:
 
 	glm::vec3				BgColour;
 	bool					WindowOpen;
+
+
+	// remove
+	Triangle tri;
+	GLuint shaderProgram;
 };

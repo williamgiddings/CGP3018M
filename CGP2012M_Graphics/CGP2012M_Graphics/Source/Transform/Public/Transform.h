@@ -1,4 +1,5 @@
 #pragma once
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 
 class Transform
@@ -13,8 +14,11 @@ public:
 	glm::vec3 GetRotation() const;
 	glm::mat4 GetMatrix() const;
 
-	void SetPosition( const float X, const float Y, const float Z );
+
+	void SetScale( const float InScale );
+	void SetScale( const glm::vec3 InScale );
 	void SetPosition( const glm::vec3 InPosition );
+	void SetRotation( const glm::vec3 InRotation );
 
 public:
 

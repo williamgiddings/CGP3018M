@@ -11,6 +11,7 @@ Mesh::Mesh( std::vector<float> InVerticies, std::vector<unsigned int> InIndicies
 	, MeshTexture()
 	, VertexLoadingMode( LoadingMode )
 {
+	SetMeshBuffers();
 }
 
 void Mesh::SetMeshBuffers()

@@ -5,7 +5,7 @@
 
 class ApplicationState;
 
-class SceneObject
+class SceneObject : public Transform
 {
 public:
 
@@ -13,16 +13,11 @@ public:
 
 	virtual void Render();
 
-	Transform& GetTransform();
 	std::string GetInstanceID() const;
 
 protected:
 
 	ApplicationState* const				AppState;
-
-private:
-
 	std::string							InstanceID; 
-	Transform							LocalTransform;
 
 };

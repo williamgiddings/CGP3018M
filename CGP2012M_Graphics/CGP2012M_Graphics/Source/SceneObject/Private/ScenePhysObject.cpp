@@ -5,7 +5,7 @@
 
 ScenePhysObject::ScenePhysObject( ApplicationState* AppStateStrongPtr, const char* MeshName )
 	: SceneObject( AppStateStrongPtr )
-	, ObjectMesh( LoadMesh( MeshName ) )
+	, ObjectMesh( this, LoadMesh( MeshName ) )
 {
 }
 

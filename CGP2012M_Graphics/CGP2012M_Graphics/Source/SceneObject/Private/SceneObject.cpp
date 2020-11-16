@@ -4,7 +4,6 @@
 
 SceneObject::SceneObject( ApplicationState* AppStateStrongPtr )
 	: InstanceID()
-	, LocalTransform()
 	, AppState( AppStateStrongPtr )
 {
 	InstanceID = MathUtils::GenerateUUID();
@@ -12,11 +11,6 @@ SceneObject::SceneObject( ApplicationState* AppStateStrongPtr )
 
 void SceneObject::Render()
 {
-}
-
-Transform& SceneObject::GetTransform()
-{
-	return LocalTransform;
 }
 
 std::string SceneObject::GetInstanceID() const

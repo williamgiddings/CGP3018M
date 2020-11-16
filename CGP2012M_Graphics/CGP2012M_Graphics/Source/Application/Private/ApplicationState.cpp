@@ -9,9 +9,12 @@ ApplicationState::ApplicationState()
 
 void ApplicationState::StartGameState()
 {
-	std::shared_ptr<ScenePhysObject> Cube = ObjectManagerServiceInstance.Instantiate<ScenePhysObject>( ScenePhysObject( this, "cube.obj" ) );
-
-
+	std::shared_ptr<ScenePhysObject> Cube = ObjectManagerServiceInstance.Instantiate<ScenePhysObject>( ScenePhysObject( this, "sphere.obj" ) );
+	if ( auto* CubePtr = Cube.get() )
+	{
+		CubePtr->SetScale( glm::vec3( 1.0f ) );
+		//CubePtr->SetPosition( glm::vec3( -50.0f, 0, 0 ) );
+	}
 
 }
 

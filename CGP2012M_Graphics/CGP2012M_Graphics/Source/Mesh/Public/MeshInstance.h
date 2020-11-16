@@ -1,13 +1,15 @@
 #pragma once
 #include <GL/glew.h>
+#include <cstring>
+#include <glm/glm.hpp>
+#include <memory>
+#include <vector>
 
 #include <Mesh/Public/Mesh.h>
 #include <Shader/Public/Shader.h>
 #include <Texture/Public/Texture.h>
-#include <cstring>
-#include <glm/glm.hpp>
-#include <vector>
-#include <memory>
+
+class ScenePhysObject;
 
 class MeshInstance
 {
@@ -30,21 +32,22 @@ private:
 	bool					RenderWireframe;
 	bool					FlipUVs;
 	bool					ClearDepth;
-	bool					MeshBuffersSet;
 
 	VertexDrawModes			VertexDrawMode;
 	GLuint					CompiledShader;
+	ScenePhysObject*		InstanceOwner;
 
 public:
 
 	MeshInstance();
-	MeshInstance( std::shared_ptr<Mesh> PooledMeshReference );
+	MeshInstance( ScenePhysObject* InstanceOwner, std::shared_ptr<Mesh> PooledMeshReference );
 
 	void SetRenderType( const VertexDrawModes DrawMode );
 	void Render();
 
 private:
 
+	void ApplyShaderUniforms();
 	void ApplyRenderSettings();
 	void ApplyTextures();
 };
