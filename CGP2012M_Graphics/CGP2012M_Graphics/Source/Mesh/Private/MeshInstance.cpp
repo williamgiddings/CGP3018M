@@ -66,7 +66,7 @@ void MeshInstance::ApplyRenderSettings()
 
 void MeshInstance::ApplyTextures()
 {
-	const Texture& const MeshTexture = ObjectMesh->GetMeshTexture();
+	const Texture& MeshTexture = ObjectMesh->GetMeshTexture();
 
 	if ( MeshTexture.IsTextureReady() )
 	{
