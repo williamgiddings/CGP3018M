@@ -48,14 +48,16 @@ void Texture::SetTextureBuffers()
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 
+	auto BitDepth = SurfaceTexture->format->BitsPerPixel == 32 ? GL_RGBA : GL_RGB;
+
 	glTexImage2D(
 		GL_TEXTURE_2D,
 		0,
-		GL_RGBA,
+		BitDepth,
 		SurfaceTexture->w,
 		SurfaceTexture->h,
 		0,
-		GL_RGBA,
+		BitDepth,
 		GL_UNSIGNED_BYTE,
 		SurfaceTexture->pixels
 	);

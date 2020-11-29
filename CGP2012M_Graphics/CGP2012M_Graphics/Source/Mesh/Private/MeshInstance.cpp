@@ -167,3 +167,14 @@ std::weak_ptr<Mesh> MeshInstance::GetSharedMesh() const
 {
 	return ObjectMesh;
 }
+
+std::weak_ptr<Material> MeshInstance::GetMaterial() const
+{
+	std::weak_ptr<Material> MaterialWeakPtr;
+
+	if ( auto* MaterialStringPtr = ObjectMaterial.get() )
+	{
+		MaterialWeakPtr = std::weak_ptr<Material>( ObjectMaterial );
+	}
+	return MaterialWeakPtr;
+}

@@ -1,4 +1,5 @@
 #pragma once
+#include <Engine/Utils/Public/PingPong.h>
 #include <SceneObject/Public/ScenePhysObject.h>
 
 class TestSphere : public ScenePhysObject
@@ -17,5 +18,8 @@ private:
 	glm::vec3	CurrentRotation;
 	glm::vec3	RotationAmount;
 	float		RotationSpeed;
+	float		DissolveSpeed;
+	float		CurrentDissolveThreshold;
+	PingPong	PingPongInstance;
 
 };

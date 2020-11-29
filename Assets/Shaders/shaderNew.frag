@@ -14,12 +14,13 @@ struct LightSource
 uniform vec4 uAmbientLight;
 uniform LightSource uDynamicLights[10];
 uniform int uLightCount;
+uniform float uDissolveThreshold;
 uniform sampler2D uFirstTexture;		
 uniform sampler2D uSecondTexture;		
+uniform sampler2D uNoiseTexture;		
 
-void main()
+vec3 GetLighting()
 {
-	vec4 curColor = texture(uFirstTexture, textureCoordinate);
 	vec3 lightingColor = vec3(0,0,0);
 	vec3 objectAmbientReflectionCoeff = vec3(1.0f, 1.0f, 1.0f);
 	vec3 ambient = (uAmbientLight.a * objectAmbientReflectionCoeff) * vec3(uAmbientLight);
@@ -46,17 +47,47 @@ void main()
 	
 	if (uLightCount > 0)
 	{
-		averagelight = vec3(lightingColor.x/uLightCount, lightingColor.y/uLightCount, lightingColor.z/uLightCount);
+		averagelight = lightingColor/uLightCount;
 	}
 
-	vec4 newColour = vec4(
-		(ambient.x+averagelight.x)*curColor.x,
-		(ambient.x+averagelight.y)*curColor.y,
-		(ambient.x+averagelight.z)*curColor.z,
-		curColor.a);
-	
-	colour =  vec4(newColour.x+averagelight.x, newColour.y+averagelight.y, newColour.z+averagelight.z, curColor.a);
+	return averagelight + ambient;
+}
+
+void clip( float Value )
+{
+	if ( Value <= 0.0f )
+	{
+		discard;
+	}
+}
+
+vec4 Dissolve()
+{
+	vec4 GlowColour = vec4( 0, 0, 1, 1 );
+	float GlowStep = 0.05f;
+	vec4 Noise = texture( uNoiseTexture, textureCoordinate );
+    
+	float DissolveAmount = ( Noise.x - uDissolveThreshold );
+    float IsVisible = step( DissolveAmount, GlowStep );
+    float IsMasked = DissolveAmount >= -GlowStep ? 1.0f : 0.0f;
+
+    vec4 Emission = GlowColour * ( IsVisible * uDissolveThreshold) * IsMasked;
+    
+    vec4 First = texture( uFirstTexture, textureCoordinate);
+    vec4 Second = texture( uSecondTexture, textureCoordinate );
+    
+	vec4 FragColour = mix(First, Second, step( DissolveAmount, 0 ) );
+
+	return FragColour + Emission;
 
 }
 
+void main()
+{
+	vec4 curColor = Dissolve();
+	
+	vec4 averagelight = vec4( GetLighting(), 1.0f );
+	vec4 newColour = averagelight * curColor;
 
+	colour = newColour;
+}

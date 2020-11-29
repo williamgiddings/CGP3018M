@@ -1,16 +1,17 @@
 #include <glm/gtc/type_ptr.hpp>
 
-#include <Material/Public/DiffuseMaterial.h>
+#include <Material/Public/DissolveMaterial.h>
 #include <Texture/Public/Texture.h>
 
-DiffuseMaterial::DiffuseMaterial()
+DissolveMaterial::DissolveMaterial()
+	: NoiseThreshold( 0.0f )
 {
 	SetShaders();
 	SetTextures();
 	SetMaterialBuffers();
 }
 
-void DiffuseMaterial::BindTextureUniforms()
+void DissolveMaterial::BindTextureUniforms()
 {
 	auto FirstTextureLocation = glGetUniformLocation( GetCompiledShader(), "uFirstTexture" );
 	glUniform1i( FirstTextureLocation, 0 );
@@ -24,9 +25,23 @@ void DiffuseMaterial::BindTextureUniforms()
 	glActiveTexture( GL_TEXTURE1 );
 	glBindTexture( GL_TEXTURE_2D, StoredTextures[1].GetCompiledTexture() );
 
+	auto NoiseTextureLocation = glGetUniformLocation( GetCompiledShader(), "uNoiseTexture" );
+	glUniform1i( NoiseTextureLocation, 2 );
+
+	glActiveTexture( GL_TEXTURE2 );
+	glBindTexture( GL_TEXTURE_2D, StoredTextures[2].GetCompiledTexture() );
+
+	auto DissolveThresholdLocation = glGetUniformLocation( GetCompiledShader(), "uDissolveThreshold" );
+	glUniform1f( DissolveThresholdLocation, NoiseThreshold );
+
 }
 
-void DiffuseMaterial::SetMaterialBuffers()
+void DissolveMaterial::SetNoiseThreshold( const float InThreshold )
+{
+	NoiseThreshold = InThreshold;
+}
+
+void DissolveMaterial::SetMaterialBuffers()
 {
 	for ( auto& TexturePtr : StoredTextures )
 	{
@@ -34,7 +49,7 @@ void DiffuseMaterial::SetMaterialBuffers()
 	}
 }
 
-void DiffuseMaterial::SetShaders()
+void DissolveMaterial::SetShaders()
 {
 	VertexShader.SetShaderProgram( Shader::ShaderType::Vertex, "shaderNew" );
 	FragmentShader.SetShaderProgram( Shader::ShaderType::Fragment, "shaderNew" );
@@ -48,8 +63,9 @@ void DiffuseMaterial::SetShaders()
 	glDeleteShader( FragmentShader.GetCompiledShader() );
 }
 
-void DiffuseMaterial::SetTextures()
+void DissolveMaterial::SetTextures()
 {
 	StoredTextures.push_back( Texture( "rock.png" ) );
 	StoredTextures.push_back( Texture( "wood.png" ) );
+	StoredTextures.push_back( Texture( "noise.png" ) );
 }

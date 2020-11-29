@@ -2,21 +2,26 @@
 
 #include <Material/Public/Material.h>
 
-class DiffuseMaterial : public Material
+class DissolveMaterial : public Material
 {
 	
 public:
 
-	DiffuseMaterial();
+	DissolveMaterial();
 
 public:
 
 	void BindTextureUniforms() override;
+	void SetNoiseThreshold( const float InThreshold );
 
 protected:
 
 	void SetMaterialBuffers() override;
 	void SetShaders() override;
 	void SetTextures() override;
+
+private:
+
+	float NoiseThreshold;
 
 };

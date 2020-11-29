@@ -22,7 +22,7 @@ std::weak_ptr<Camera> ApplicationState::GetSceneCamera() const
 void ApplicationState::StartGameState()
 {
 	SceneCamera = ObjectManagerServiceInstance.Instantiate<Camera>( Camera( this ) );
-	SceneLight = LightingServiceInstance.CreateNewLight( glm::vec3(-2.0f, -1.0f, 0), glm::vec4( 0.9f, 0.9f, 0.9f, 0.5f ) );
+	SceneLight = LightingServiceInstance.CreateNewLight( glm::vec3(-2.0f, -1.0f, 0), glm::vec4( 0.9f, 0.9f, 0.9f, 1.0f ) );
 	Sphere = ObjectManagerServiceInstance.Instantiate<TestSphere>( TestSphere( this ) );
 	
 	if ( auto SpherePtr = Sphere.lock() )

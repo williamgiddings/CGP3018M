@@ -33,9 +33,11 @@ public:
 	void Render();
 	void SetUniformBindings( const UniformBinding InBinding );
 	std::weak_ptr<Mesh> GetSharedMesh() const;
+	std::weak_ptr<Material> GetMaterial() const;
 	
 	template< typename MaterialType >
 	void SetMaterial( MaterialType InMaterial );
+
 
 private:
 

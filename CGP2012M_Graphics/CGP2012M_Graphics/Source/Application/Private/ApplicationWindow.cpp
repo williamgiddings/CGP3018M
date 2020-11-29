@@ -35,7 +35,7 @@ ApplicationWindow::ApplicationWindow()
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
 
-	SetBackGroundColour( 0.0f, 1.0f, 0.0f );
+	SetBackGroundColour( 0.0f, 0.0f, 0.0f );
 }
 
 void ApplicationWindow::SetBackGroundColour( const float R, const float G, const float B )

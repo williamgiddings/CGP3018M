@@ -31,7 +31,7 @@
     <ClCompile Include="Source\Input\Private\InputInterface.cpp" />
     <ClCompile Include="Source\Lighting\Private\LightingService.cpp" />
     <ClCompile Include="Source\Lighting\Private\LightSource.cpp" />
-    <ClCompile Include="Source\Material\Private\DiffuseMaterial.cpp" />
+    <ClCompile Include="Source\Material\Private\DissolveMaterial.cpp" />
     <ClCompile Include="Source\Material\Private\Material.cpp" />
     <ClCompile Include="Source\MeshParser\Private\OBJParser.cpp" />
     <ClCompile Include="Source\Mesh\Private\Mesh.cpp" />
@@ -52,6 +52,7 @@
     <ClInclude Include="Source\Engine\ObjectFactory\Public\ObjectManagerService.h" />
     <ClInclude Include="Source\Engine\ObjectFactory\Public\ObjectHelpers.h" />
     <ClInclude Include="Source\Engine\Utils\Public\MathUtil.h" />
+    <ClInclude Include="Source\Engine\Utils\Public\PingPong.h" />
     <ClInclude Include="Source\Input\Public\InputHandlerService.h" />
     <ClInclude Include="Source\Input\Public\InputBinding.h" />
     <ClInclude Include="Source\Input\Public\InputInterface.h" />
@@ -59,7 +60,7 @@
     <ClInclude Include="Source\Application\Public\ApplicationWindow.h" />
     <ClInclude Include="Source\Lighting\Public\LightingService.h" />
     <ClInclude Include="Source\Lighting\Public\LightSource.h" />
-    <ClInclude Include="Source\Material\Public\DiffuseMaterial.h" />
+    <ClInclude Include="Source\Material\Public\DissolveMaterial.h" />
     <ClInclude Include="Source\Material\Public\Material.h" />
     <ClInclude Include="Source\MeshParser\Public\OBJParser.h" />
     <ClInclude Include="Source\Mesh\Primatives\Public\Triangle.h" />
