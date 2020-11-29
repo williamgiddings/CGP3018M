@@ -9,6 +9,10 @@ SceneObject::SceneObject( ApplicationState* AppStateStrongPtr )
 	InstanceID = MathUtils::GenerateUUID();
 }
 
+void SceneObject::Tick()
+{
+}
+
 void SceneObject::Render()
 {
 }
@@ -16,4 +20,9 @@ void SceneObject::Render()
 std::string SceneObject::GetInstanceID() const
 {
 	return InstanceID;
+}
+
+ApplicationState* SceneObject::GetAppState() const
+{
+	return AppState;
 }

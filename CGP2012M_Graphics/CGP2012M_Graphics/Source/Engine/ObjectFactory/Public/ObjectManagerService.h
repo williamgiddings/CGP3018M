@@ -2,20 +2,24 @@
 #include <memory>
 #include <vector>
 
+#include <Application/Public/ApplicationService.h>
 #include <SceneObject/Public/SceneObject.h>
 
 using SceneObjectSharedPtr = std::shared_ptr< SceneObject >;
 
-class ObjectManagerService
+class ObjectManagerService : public ApplicationService
 {
 public:
 
-	ObjectManagerService();
+	ObjectManagerService( ApplicationState* InAppState );
+
+public:
 
 	template< typename ObjectClass >
 	std::shared_ptr< ObjectClass> Instantiate( const ObjectClass InObject );
 	
 	void RenderSceneObjects();
+	void TickSceneObjects();
 
 private:
 
@@ -28,7 +32,7 @@ std::shared_ptr<ObjectClass> ObjectManagerService::Instantiate( const ObjectClas
 {
 	if ( std::is_base_of< SceneObject, ObjectClass >::value )
 	{
-		std::shared_ptr< ObjectClass > SpawnedObject( std::make_shared<ObjectClass>( InObject ) );
+		std::shared_ptr< ObjectClass > SpawnedObject( new ObjectClass( InObject ) );
 		ObjectsInScene.push_back( SpawnedObject );
 		return SpawnedObject;
 	}

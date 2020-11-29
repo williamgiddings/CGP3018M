@@ -7,7 +7,7 @@
 
 
 #include <Shader/Public/Shader.h>
-
+ApplicationWindow* ApplicationWindow::WindowInstance;
 ApplicationWindow::ApplicationWindow()
 	: AppState()
 	, ApplicationInputInterface()
@@ -16,9 +16,11 @@ ApplicationWindow::ApplicationWindow()
 	, SDLWindow( SDLWindow )
 	, SDLContext( SDLContext )
 	, BgColour()
+	, WindowDimensions( 800, 600 )
 	, WindowOpen( true )
 {
-	SDLWindow = SDL_CreateWindow( "CGP3018M OpenGL Window", 100, 100, 800, 600, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
+	WindowInstance = this;
+	SDLWindow = SDL_CreateWindow( "CGP3018M OpenGL Window", 100, 100, (int)WindowDimensions.x, (int)WindowDimensions.y, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
 	int major = 4, minor = 3;
 
 	SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, major );
@@ -43,6 +45,15 @@ void ApplicationWindow::SetBackGroundColour( const float R, const float G, const
 	BgColour.b = B;
 }
 
+glm::vec2 ApplicationWindow::GetDimensions() const
+{
+	return WindowDimensions;
+}
+
+const ApplicationWindow* ApplicationWindow::GetWindow()
+{
+	return WindowInstance;
+}
 
 void ApplicationWindow::BindInputs()
 {
@@ -115,12 +126,13 @@ void ApplicationWindow::Tick()
 	InputHandlerService& ApplicationInputHandler = AppState.GetInputHandlerService();
 
 	ApplicationInputHandler.PollInput();
+	AppState.TickGameState();
 }
 
 void ApplicationWindow::Render()
 {
 	glClearColor( BgColour.r, BgColour.g, BgColour.b, 1 );
-	glClear( GL_COLOR_BUFFER_BIT );
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 	
 	AppState.GetObjectManagerService().RenderSceneObjects();
 	

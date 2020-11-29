@@ -10,11 +10,12 @@ class Texture
 public:
 
 	Texture();
+	Texture( const char* TextureName, const bool AutoLoad = true );
 
 	void Load( const char* TextureFileName );
 	void SetTextureBuffers();
 	GLuint GetCompiledTexture() const;
-	bool IsTextureReady() const;
+	SDL_Surface* GetSurfaceTexture() const;
 
 private:
 

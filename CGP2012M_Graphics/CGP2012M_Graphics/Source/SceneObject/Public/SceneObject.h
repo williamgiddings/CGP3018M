@@ -11,9 +11,11 @@ public:
 
 	SceneObject( ApplicationState* AppStateStrongPtr );
 
+	virtual void Tick();
 	virtual void Render();
 
 	std::string GetInstanceID() const;
+	ApplicationState* GetAppState() const;
 
 protected:
 

@@ -1,7 +1,8 @@
 #include <Engine/ObjectFactory/Public/ObjectManagerService.h>
 
-ObjectManagerService::ObjectManagerService()
-	: ObjectsInScene()
+ObjectManagerService::ObjectManagerService( ApplicationState* InAppState )
+	: ApplicationService( InAppState )
+	, ObjectsInScene()
 {
 }
 
@@ -12,6 +13,17 @@ void ObjectManagerService::RenderSceneObjects()
 		if ( auto* SceneObjectPtr = SceneObjectShared.get() )
 		{
 			SceneObjectPtr->Render();
+		}
+	}
+}
+
+void ObjectManagerService::TickSceneObjects()
+{
+	for ( auto SceneObjectShared : ObjectsInScene )
+	{
+		if ( auto* SceneObjectPtr = SceneObjectShared.get() )
+		{
+			SceneObjectPtr->Tick();
 		}
 	}
 }

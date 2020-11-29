@@ -1,22 +1,23 @@
 #version 440 core
-layout (location = 0) in vec3 Position; //vertex positions
-layout (location=1) in vec2 texCoord;	//texture coordinates
-layout (location=2) in vec3 normals;	//vertex colours
+layout (location = 0) in vec3 InPosition;
+layout (location=1) in vec2 InTexCoord;
+layout (location=2) in vec3 InNormals;
 
 out vec2 textureCoordinate;
-out vec3 normalDirs; 						//output vertex colour to fragment shader
+out vec3 normalDirs;	
 out vec3 fragmentPosition;
 
-uniform mat4 uNormalMatrix;
-uniform mat4 transform;				//pass transform matrix into the shader
+uniform mat4 uTransform;
 uniform mat4 uView;	
 uniform mat4 uProjection;
-
+uniform mat4 uNormalMatrix;
 
 void main()
 {
-	gl_Position =  transform * vec4(Position, 1.0);
-	fragmentPosition = vec3(transform * vec4(Position, 1.0f));
-	normalDirs = mat3(uNormalMatrix)*normals; 	
-	textureCoordinate = vec2(texCoord.x, 1-texCoord.y);
+	
+	gl_Position = uProjection * uView * uTransform * vec4(InPosition, 1.0);
+	fragmentPosition = vec3(uTransform * vec4(InPosition, 1.0f));
+	textureCoordinate = vec2(InTexCoord.x, 1-InTexCoord.y);
+	normalDirs = mat3(uNormalMatrix)*InNormals; 
+	
 }

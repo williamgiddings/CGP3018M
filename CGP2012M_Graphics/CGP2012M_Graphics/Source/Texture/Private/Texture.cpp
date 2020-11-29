@@ -1,16 +1,31 @@
-
 #include <SDL_image.h>
-#include <Texture\Public\Texture.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+
+#include <Engine/EngineEnvironment.h>
+#include <Texture/Public/Texture.h>
 
 Texture::Texture()
+	: Texture( "", false )
+{
+}
+
+Texture::Texture( const char* TextureName, const bool AutoLoad )
 	: SurfaceTexture()
 	, CompiledTexture()
 {
+	if ( AutoLoad )
+	{
+		Load( TextureName );
+	}
 }
 
 void Texture::Load( const char* TextureFileName )
 {
-	SurfaceTexture = IMG_Load( TextureFileName );
+	const std::string TexturePath = EngineEnvironment::TextureDir + std::string( TextureFileName );
+
+	SurfaceTexture = IMG_Load( TexturePath.c_str() );
 
 	if ( SurfaceTexture == NULL )
 	{
@@ -20,7 +35,6 @@ void Texture::Load( const char* TextureFileName )
 	{
 		std::cout << "Success loading " << TextureFileName << std::endl;
 	}
-
 }
 
 void Texture::SetTextureBuffers()
@@ -29,12 +43,13 @@ void Texture::SetTextureBuffers()
 
 	glBindTexture( GL_TEXTURE_2D, CompiledTexture );
 
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 
-	glTexImage2D( GL_TEXTURE_2D,
+	glTexImage2D(
+		GL_TEXTURE_2D,
 		0,
 		GL_RGBA,
 		SurfaceTexture->w,
@@ -42,7 +57,7 @@ void Texture::SetTextureBuffers()
 		0,
 		GL_RGBA,
 		GL_UNSIGNED_BYTE,
-		SurfaceTexture->pixels 
+		SurfaceTexture->pixels
 	);
 
 	glBindTexture( GL_TEXTURE_2D, 0 );
@@ -54,7 +69,7 @@ GLuint Texture::GetCompiledTexture() const
 	return CompiledTexture;
 }
 
-bool Texture::IsTextureReady() const
+SDL_Surface* Texture::GetSurfaceTexture() const
 {
 	return SurfaceTexture;
 }

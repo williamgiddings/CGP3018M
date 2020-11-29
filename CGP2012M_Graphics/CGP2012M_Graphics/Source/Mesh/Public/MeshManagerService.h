@@ -1,16 +1,20 @@
 #pragma once
-#include <Mesh/Public/Mesh.h>
 #include <vector>
 #include <map>
 
-class MeshManagerService 
+#include <Application/Public/ApplicationService.h>
+#include <Mesh/Public/Mesh.h>
+
+class MeshManagerService : public ApplicationService
 {
 public:
 
-	MeshManagerService();
+	MeshManagerService( ApplicationState* InAppState );
 	~MeshManagerService();
 
-	std::shared_ptr<Mesh> GetMesh( const char * RelativePath );
+public:
+
+	std::weak_ptr<Mesh> GetMesh( const char * RelativePath );
 
 private:
 

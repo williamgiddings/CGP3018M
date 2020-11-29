@@ -22,15 +22,12 @@ public:
 	void SetMeshBuffers();
 
 	void SetLoadingMode( const VertexLoadingModes LoadingMode );
-	void SetTexture( const char * InTextureFilePath );
 
 	const VertexLoadingModes GetVertexReadMode() const;
 	const std::vector<float>& GetVerticies() const;
 	const std::vector<float>& GetUVCoords() const;
 	const std::vector<float>& GetNormals() const;
 	const std::vector<GLuint>& GetIndicies() const;
-	
-	const Texture& GetMeshTexture() const;
 
 	GLuint GetVertexBuffer() const;
 	GLuint GetIndexBuffer() const;
@@ -38,16 +35,15 @@ public:
 
 private:
 
-	std::vector<float>		Verticies;
-	std::vector<float>		UVCoords;
-	std::vector<float>		Normals;
-	std::vector<GLuint>		Indicies;
+	std::vector<float>								Verticies;
+	std::vector<float>								UVCoords;
+	std::vector<float>								Normals;
+	std::vector<GLuint>								Indicies;
 
-	GLuint					VertexBufferObject;
-	GLuint					IndexBufferObject;
-	GLuint					VertexArrayObject;
+	GLuint											VertexBufferObject;
+	GLuint											IndexBufferObject;
+	GLuint											VertexArrayObject;
 
-	Texture					MeshTexture;
-	VertexLoadingModes		VertexLoadingMode;
+	VertexLoadingModes								VertexLoadingMode;
 
 };

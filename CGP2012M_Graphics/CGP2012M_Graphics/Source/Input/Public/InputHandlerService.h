@@ -1,20 +1,21 @@
 #pragma once
-
 #include <SDL.h>
 #include <functional>
 #include <map>
 #include <list>
 #include <memory>
 
+#include <Application/Public/ApplicationService.h>
+
 class InputBinding;
 class InputInterface;
 
 using InputBindingHandle = std::shared_ptr< InputBinding >;
-class InputHandlerService
+class InputHandlerService : public ApplicationService
 {
 public:
 
-	InputHandlerService();
+	InputHandlerService( ApplicationState* InAppState );
 
 	InputBindingHandle BindInput( InputInterface* Binder, SDL_Keycode KeyCode, std::function< void() > Callback );
 	void UnBindInput( InputBindingHandle Binding );

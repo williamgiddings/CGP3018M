@@ -3,8 +3,9 @@
 #include <Input/Public/InputHandlerService.h>
 #include <Input/Public/InputInterface.h>
 
-InputHandlerService::InputHandlerService()
-	: InputBindingMap()
+InputHandlerService::InputHandlerService( ApplicationState* InAppState )
+	: ApplicationService( InAppState )
+	, InputBindingMap()
 {
 }
 

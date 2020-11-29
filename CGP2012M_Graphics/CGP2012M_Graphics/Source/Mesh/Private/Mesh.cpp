@@ -8,7 +8,6 @@ Mesh::Mesh( std::vector<float> InVerticies, std::vector<unsigned int> InIndicies
 	, VertexBufferObject()
 	, IndexBufferObject()
 	, VertexArrayObject()
-	, MeshTexture()
 	, VertexLoadingMode( LoadingMode )
 {
 	SetMeshBuffers();
@@ -52,11 +51,6 @@ void Mesh::SetLoadingMode( VertexLoadingModes LoadingMode )
 	VertexLoadingMode = LoadingMode;
 }
 
-void Mesh::SetTexture( const char* InTextureFilePath )
-{
-	MeshTexture.Load( InTextureFilePath );
-	MeshTexture.SetTextureBuffers();
-}
 
 const Mesh::VertexLoadingModes Mesh::GetVertexReadMode() const
 {
@@ -81,11 +75,6 @@ const std::vector<float>& Mesh::GetNormals() const
 const std::vector<GLuint>& Mesh::GetIndicies() const
 {
 	return Indicies;
-}
-
-const Texture& Mesh::GetMeshTexture() const
-{
-	return MeshTexture;
 }
 
 GLuint Mesh::GetVertexBuffer() const

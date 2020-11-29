@@ -8,9 +8,6 @@
 #include <Input/Public/InputInterface.h>
 #include <Application/Public/ApplicationState.h>
 
-//remove
-#include <Mesh/Primatives/Public/Triangle.h>
-
 class ApplicationWindow
 {
 public:
@@ -20,6 +17,9 @@ public:
 	int StartGameLoop();
 	void CloseWindow();
 	void SetBackGroundColour( const float R, const float G , const float B );
+	glm::vec2 GetDimensions() const;
+
+	static const ApplicationWindow* GetWindow();
 
 private:
 
@@ -30,21 +30,19 @@ private:
 	void CleanUpApplication();
 
 private:
-
-	ApplicationState		AppState;
-	InputInterface			ApplicationInputInterface;
 	
-	InputBindingHandle		QuitInput;
-	InputBindingHandle		ColourInput;
+	static ApplicationWindow*			WindowInstance;
 
-	SDL_GLContext			SDLContext;
-	SDL_Window*				SDLWindow;
+	ApplicationState					AppState;
+	InputInterface						ApplicationInputInterface;
+	
+	InputBindingHandle					QuitInput;
+	InputBindingHandle					ColourInput;
 
-	glm::vec3				BgColour;
-	bool					WindowOpen;
+	SDL_GLContext						SDLContext;
+	SDL_Window*							SDLWindow;
 
-
-	// remove
-	Triangle tri;
-	GLuint shaderProgram;
+	glm::vec3							BgColour;
+	glm::vec2							WindowDimensions;
+	bool								WindowOpen;
 };
