@@ -4,7 +4,6 @@
 #include <iostream>
 
 struct SDL_Surface;
-
 class Texture
 {
 public:

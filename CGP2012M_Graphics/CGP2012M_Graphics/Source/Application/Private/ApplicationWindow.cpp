@@ -16,7 +16,7 @@ ApplicationWindow::ApplicationWindow()
 	, SDLWindow( SDLWindow )
 	, SDLContext( SDLContext )
 	, BgColour()
-	, WindowDimensions( 800, 600 )
+	, WindowDimensions( 1920, 1080 )
 	, WindowOpen( true )
 {
 	WindowInstance = this;
@@ -91,7 +91,6 @@ void ApplicationWindow::UnBindInputs()
 	AppState.GetInputHandlerService().UnBindInput( QuitInput );
 	AppState.GetInputHandlerService().UnBindInput( ColourInput );
 }
-
 
 int ApplicationWindow::StartGameLoop()
 {

@@ -17,7 +17,8 @@ uniform int uLightCount;
 uniform float uDissolveThreshold;
 uniform sampler2D uFirstTexture;		
 uniform sampler2D uSecondTexture;		
-uniform sampler2D uNoiseTexture;		
+uniform sampler2D uNoiseTexture;	
+uniform sampler2D uRampTexture;	
 
 vec3 GetLighting()
 {
@@ -63,20 +64,24 @@ void clip( float Value )
 
 vec4 Dissolve()
 {
-	vec4 GlowColour = vec4( 0, 0, 1, 1 );
+	
+	float BurnStep = 0.15f;
+	float BurnMaskCuttoff = 2.75f;
 	float GlowStep = 0.05f;
 	vec4 Noise = texture( uNoiseTexture, textureCoordinate );
     
 	float DissolveAmount = ( Noise.x - uDissolveThreshold );
     float IsVisible = step( DissolveAmount, GlowStep );
-    float IsMasked = DissolveAmount >= -GlowStep ? 1.0f : 0.0f;
-
-    vec4 Emission = GlowColour * ( IsVisible * uDissolveThreshold) * IsMasked;
+    float IsMasked = DissolveAmount >= -GlowStep*BurnMaskCuttoff ? 1.0f : 0.0f;
+	
+	float RampValue = DissolveAmount * (1 / BurnStep);
+	vec4 BurnRamp = texture( uRampTexture, vec2(1-RampValue, 0) );
+    vec4 Emission = BurnRamp * IsVisible * IsMasked;
     
     vec4 First = texture( uFirstTexture, textureCoordinate);
     vec4 Second = texture( uSecondTexture, textureCoordinate );
     
-	vec4 FragColour = mix(First, Second, step( DissolveAmount, 0 ) );
+	vec4 FragColour = mix(First, Second, smoothstep( DissolveAmount, 0.0f, 1.0f ) );
 
 	return FragColour + Emission;
 

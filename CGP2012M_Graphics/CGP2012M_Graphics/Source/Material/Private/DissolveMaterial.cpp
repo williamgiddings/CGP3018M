@@ -15,21 +15,23 @@ void DissolveMaterial::BindTextureUniforms()
 {
 	auto FirstTextureLocation = glGetUniformLocation( GetCompiledShader(), "uFirstTexture" );
 	glUniform1i( FirstTextureLocation, 0 );
-
 	glActiveTexture( GL_TEXTURE0 );
 	glBindTexture( GL_TEXTURE_2D, StoredTextures[0].GetCompiledTexture() );
 
 	auto SecondTextureLocation = glGetUniformLocation( GetCompiledShader(), "uSecondTexture" );
 	glUniform1i( SecondTextureLocation, 1 );
-
 	glActiveTexture( GL_TEXTURE1 );
 	glBindTexture( GL_TEXTURE_2D, StoredTextures[1].GetCompiledTexture() );
 
 	auto NoiseTextureLocation = glGetUniformLocation( GetCompiledShader(), "uNoiseTexture" );
 	glUniform1i( NoiseTextureLocation, 2 );
-
 	glActiveTexture( GL_TEXTURE2 );
 	glBindTexture( GL_TEXTURE_2D, StoredTextures[2].GetCompiledTexture() );
+
+	auto BurnRampTextureLocation = glGetUniformLocation( GetCompiledShader(), "uRampTexture" );
+	glUniform1i( BurnRampTextureLocation, 3 );
+	glActiveTexture( GL_TEXTURE3 );
+	glBindTexture( GL_TEXTURE_2D, StoredTextures[3].GetCompiledTexture() );
 
 	auto DissolveThresholdLocation = glGetUniformLocation( GetCompiledShader(), "uDissolveThreshold" );
 	glUniform1f( DissolveThresholdLocation, NoiseThreshold );
@@ -68,4 +70,5 @@ void DissolveMaterial::SetTextures()
 	StoredTextures.push_back( Texture( "rock.png" ) );
 	StoredTextures.push_back( Texture( "wood.png" ) );
 	StoredTextures.push_back( Texture( "noise.png" ) );
+	StoredTextures.push_back( Texture( "burnramp.png" ) );
 }

@@ -18,6 +18,6 @@ void main()
 	gl_Position = uProjection * uView * uTransform * vec4(InPosition, 1.0);
 	fragmentPosition = vec3(uTransform * vec4(InPosition, 1.0f));
 	textureCoordinate = vec2(InTexCoord.x, 1-InTexCoord.y);
-	normalDirs = mat3(uNormalMatrix)*InNormals; 
+	normalDirs = vec3(uNormalMatrix * vec4(InNormals, 0.0));
 	
 }

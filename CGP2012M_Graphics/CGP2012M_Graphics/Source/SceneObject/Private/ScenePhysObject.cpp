@@ -2,7 +2,6 @@
 #include <Camera/Public/Camera.h>
 #include <Engine/EngineEnvironment.h>
 #include <Lighting/Public/LightingService.h>
-#include <Material/Public/DiffuseMaterial.h>
 #include <Mesh/Public/MeshManagerService.h>
 #include <SceneObject/Public/ScenePhysObject.h>
 
